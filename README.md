@@ -111,3 +111,5 @@ const char *husarnetJoinCode = "fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxx
 5. modify the variables to adapt to the program that you are making in DB.cpp and DB.h 
 
 > Note when using husarnet the link to the webpage is found on app.husarnet.com, click on the button Web UI, however it might lead to LinkFromHusarnet/index.html, which doesn't exist in this example, therefor use LinkFromHusarnet/
+
+> Note that there are processing and nextion example sketches included, the processing sketch requires you to get the controlP5 library
