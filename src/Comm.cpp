@@ -7,7 +7,7 @@ LinkedPointerList<Xbool> Xboollist;
 
 void Comm_Cmd(String Address, String Value, String NexType, byte signature)//method
 {
-  #if defined XSerial || defined XBluetooth || defined WifiAP
+  #if defined XSerial || defined XBluetooth || defined WifiAP || defined XHWSerial
     String cmd = Address + "=" + Value + terminator;
   #endif
   #if defined XSerial || defined XSerial_Nextion
@@ -18,6 +18,8 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
   #endif
   #ifdef WifiAP
     bool ENWifi = (signature & 0b00001000) > 0;
+  #endif
+  #if defined WifiAP || defined XHWSerial
     int cmd_length = cmd.length();
     char char_cmd[cmd_length+1]; 
     cmd.toCharArray(char_cmd, cmd_length+1);
@@ -33,8 +35,10 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
       nexcmd += Value + nextion_terminator;
     }
   #endif
-  #ifdef XHWSerial_Nextion
+  #if defined XHWSerial || defined XHWSerial_Nextion
     bool ENHWSerial = (signature & 0b00000001) > 0;
+  #endif
+  #ifdef XHWSerial_Nextion
     int nexcmd_length = nexcmd.length();
     char char_nexcmd[nexcmd_length+1]; 
     nexcmd.toCharArray(char_nexcmd, nexcmd_length+1);
@@ -69,7 +73,7 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
       }
     }
   #endif
-  #if XHWSerial
+  #ifdef XHWSerial
     if(ENHWSerial)
     {
       HWSERIAL.flush();
