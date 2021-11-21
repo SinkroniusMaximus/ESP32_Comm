@@ -118,3 +118,5 @@ const char *hostName = "my-esp32";
 > Note that there are processing and nextion example sketches included, the processing sketch requires you to get the controlP5 library
 
 > Apparently the husarnet code involves a means of Over The Air (OTA) transfer, get informed if you need it!
+
+> Video example: https://www.youtube.com/watch?v=lab9KZdaQsw
