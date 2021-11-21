@@ -7,11 +7,7 @@ LinkedPointerList<Xbool> Xboollist;
 
 void Comm_Cmd(String Address, String Value, String NexType, byte signature)//method
 {
-<<<<<<< HEAD
   #if defined XSerial || defined XBluetooth || defined WifiAP || defined XHWSerial || defined XHusarnet
-=======
-  #if defined XSerial || defined XBluetooth || defined WifiAP || defined XHWSerial
->>>>>>> 8057c6cc97a52b975d8769149de8a3764bd42259
     String cmd = Address + "=" + Value + terminator;
   #endif
   #if defined XSerial || defined XSerial_Nextion
@@ -23,11 +19,7 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
   #ifdef WifiAP
     bool ENWifi = (signature & 0b00001000) > 0;
   #endif
-<<<<<<< HEAD
   #if defined WifiAP || defined XHWSerial || defined XHusarnet
-=======
-  #if defined WifiAP || defined XHWSerial
->>>>>>> 8057c6cc97a52b975d8769149de8a3764bd42259
     int cmd_length = cmd.length();
     char char_cmd[cmd_length+1]; 
     cmd.toCharArray(char_cmd, cmd_length+1);
