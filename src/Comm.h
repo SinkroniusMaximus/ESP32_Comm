@@ -15,6 +15,8 @@ String Serial_read;
 String HWSerial_read;
 String SerialBT_read;
 String WifiAP_read;
+String Husarnet_read;
+String Husarnetweb_read;
 String Buffer_string;
 Comm();
 void CommXchange(String terminator);

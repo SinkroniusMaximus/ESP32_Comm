@@ -7,7 +7,7 @@ LinkedPointerList<Xbool> Xboollist;
 
 void Comm_Cmd(String Address, String Value, String NexType, byte signature)//method
 {
-  #if defined XSerial || defined XBluetooth || defined WifiAP
+  #if defined XSerial || defined XBluetooth || defined WifiAP || defined XHWSerial || defined XHusarnet
     String cmd = Address + "=" + Value + terminator;
   #endif
   #if defined XSerial || defined XSerial_Nextion
@@ -18,6 +18,8 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
   #endif
   #ifdef WifiAP
     bool ENWifi = (signature & 0b00001000) > 0;
+  #endif
+  #if defined WifiAP || defined XHWSerial || defined XHusarnet
     int cmd_length = cmd.length();
     char char_cmd[cmd_length+1]; 
     cmd.toCharArray(char_cmd, cmd_length+1);
@@ -33,8 +35,10 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
       nexcmd += Value + nextion_terminator;
     }
   #endif
-  #ifdef XHWSerial_Nextion
+  #if defined XHWSerial || defined XHWSerial_Nextion
     bool ENHWSerial = (signature & 0b00000001) > 0;
+  #endif
+  #ifdef XHWSerial_Nextion
     int nexcmd_length = nexcmd.length();
     char char_nexcmd[nexcmd_length+1]; 
     nexcmd.toCharArray(char_nexcmd, nexcmd_length+1);
@@ -43,7 +47,7 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
   #ifdef XSerial
     if(ENSerial)
     {
-      Serial.print(cmd);
+      Serial1.print(cmd);
     }
   #endif
   #ifdef XSerial_Nextion
@@ -69,7 +73,7 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
       }
     }
   #endif
-  #if XHWSerial
+  #ifdef XHWSerial
     if(ENHWSerial)
     {
       HWSERIAL.flush();
@@ -86,14 +90,8 @@ void Comm_Cmd(String Address, String Value, String NexType, byte signature)//met
   #ifdef XHusarnet   
     if((signature & 0b00010000) > 0)
     {
-      // Serial.println("Inverse Sigature: ");
-      // Serial.println(signature);
-      // Serial.println("and gate:");
-      // byte b = (signature & 0b00010000);
-      // Serial.println(b);
-      CommAddress = Address;
-      CommValue = Value;
-      Cloud();
+      Husarnet_Print(cmd);
+      // Cloud(Address, Value, char_cmd, cmd_length); //push HTTP request
     }
   #endif
 }
@@ -128,9 +126,9 @@ void Comm::CommXchange(String terminator) // read data input, a method inside co
   }
   #endif  
   #if defined XSerial || defined XSerial_Nextion
-  if ((Serial.available() > 0)&(!Cmd_Received))
+  if ((Serial1.available() > 0)&(!Cmd_Received))
   {
-      Serial_read += String(char(Serial.read()));//Serial.readString();
+      Serial_read += String(char(Serial1.read()));//Serial.readString();
   }
   #endif
   #ifdef XBluetooth
@@ -159,7 +157,11 @@ void Comm::CommXchange(String terminator) // read data input, a method inside co
       }
     }
   #endif
-
+  #ifdef XHusarnet
+      RequestData();
+      Husarnet_read += Husarnet_Read();
+      Husarnetweb_read += Husarnet_Web_Read();
+  #endif
   #if defined XHWSerial || defined XHWSerial_Nextion
     SeekCmdIn(&Buffer_string, &SignatureList, &HWSerial_read, char(0b00000001));
   #endif
@@ -205,7 +207,7 @@ void Comm::CleanString(String terminator)
       Message = "Debug.txt=\"clean: ";
       Message += Xchange_string.substring(0, Xchange_string.length() - 1);
       Message += "\"";
-      // Comm_Cmd_String(Message);
+      Serial1.println(Message);
       Xchange_string="";
       Cmd_Received=false;
     }

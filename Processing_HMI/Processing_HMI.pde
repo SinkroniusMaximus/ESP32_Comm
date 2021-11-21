@@ -4,7 +4,7 @@ import controlP5.*;
 import java.util.*;
 void setup() {
   clear();
-  frameRate(1200);
+  //frameRate(1200);
   size(770, 768);
   grid.Resize(14,25);
   grid.Begin();
