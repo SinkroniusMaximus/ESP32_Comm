@@ -10,7 +10,8 @@
 
 ## Default hardware configuration:
 
-- the onboard LED, connected to pin: **2**, is used as an example to test the connection
+- The sketch now contains the esp32 universal controller configuration, see /Images for the details
+- Make your own cofiguration by modifying the IO definition in setup, pin definition in globals and the IO refresh method used in main.
 
 ## How does it communicate
 Instead of creating variables of type int, bool or string, create Xint, Xbool or XString.
@@ -42,9 +43,9 @@ HMI_Comm.CommXchange(terminator);
 ```
 The class communicates with the following syntax "Address=Value*" in which * is used as the terminator.
 For nextion devices the protocol adjusts to Address.val=Value, followed by '0xFF 0xFF 0xFF' as a terminator
-For Husarnet http request is used, which is basically the webadress like /var/Address/Value
+For Husarnet http request is used, which is basically the webadress like /var/Address/Value or in this sketch example /var/data
 
-In other words when you test the protocol using the serial monitor type: O1=1* and the value DB.Relay1.x will be updated and the onboard led turns on.
+In other words when you test the protocol using the serial monitor type: O1=1* and the value DB.Relay1.x will be updated and the output turns on.
 
 ## How to select a protocol
 Open up the Globals.h and enable the different protocols by uncommenting the #define statements:
