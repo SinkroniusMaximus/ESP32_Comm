@@ -82,17 +82,14 @@ The succession rate is not always 100%, for some protocols like Bluetooth, Husar
 
 3. Select the communication options in Globals.h
 
-4.1 in case you use husarnet 
+4.1 in case you use husarnet this platformio.ini file works immediately, but when you don't you can comment out the unused depencencies.
 
-use the respective platformio.ini file, since it has external dependencies
-also Provide your Wi-Fi networks credentials, these can be found in CommHusarnet.cpp
+also Provide your Wi-Fi networks credentials, rename the credentials-template.h to credentials.h and fill in the details.
 
 ```cpp
 // WiFi credentials
-const char* wifiNetworks[][2] = {
-  {"wifi-ssid-one", "wifi-pass-one"},
-  {"wifi-ssid-two", "wifi-pass-two"},
-} 
+const char *ssid = "FreeWifi";
+const char *password = "hardtoguess";
 ```
 
 4.2 Get your Husarnet VPN Join Code (allowing you to connect devices to the same VPN network)
@@ -105,7 +102,12 @@ const char* wifiNetworks[][2] = {
 4.3 Place your Husarnet Join Code here:
 
 ```cpp
-const char *husarnetJoinCode = "fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxxxxxxxxxxxxxxxx";
+const char *husarnetJoinCode = "fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xhfqwPxxxetyCExsSPRPn9"; // find at app.husarnet.com
+```
+
+4.4 Use a unique controller name for each controller, like "ESP32_HMI" or "ESP32_UC":
+```cpp
+const char *hostName = "my-esp32";
 ```
 
 5. modify the variables to adapt to the program that you are making in DB.cpp and DB.h 
@@ -113,3 +115,5 @@ const char *husarnetJoinCode = "fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxx
 > Note when using husarnet the link to the webpage is found on app.husarnet.com, click on the button Web UI, however it might lead to LinkFromHusarnet/index.html, which doesn't exist in this example, therefor use LinkFromHusarnet/
 
 > Note that there are processing and nextion example sketches included, the processing sketch requires you to get the controlP5 library
+
+> Apparently the husarnet code involves a means of Over The Air (OTA) transfer, get informed if you need it!
