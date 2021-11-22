@@ -120,3 +120,5 @@ const char *hostName = "my-esp32";
 > Apparently the husarnet code involves a means of Over The Air (OTA) transfer, get informed if you need it!
 
 > Video example: https://www.youtube.com/watch?v=lab9KZdaQsw
+
+> I added a Serial.java in the Processing_HMI folder to override the usual serial port handling. It disables the RTS line so that the ESP32 doesn't restart on connecting. You can either delete it if you don't desire it, or you can generate a jar and replace the original class files or just leave it as it is. The last option is easiest, however it disables the intellisense feature.
